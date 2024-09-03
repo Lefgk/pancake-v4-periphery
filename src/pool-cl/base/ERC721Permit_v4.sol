@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 pragma solidity ^0.8.20;
 
-import {ERC721} from "solmate/src/tokens/ERC721.sol";
+import {ERC721} from "solmate/tokens/ERC721.sol";
 import {ERC721PermitHashLibrary} from "../libraries/ERC721PermitHash.sol";
 import {SignatureVerification} from "permit2/src/libraries/SignatureVerification.sol";
 
