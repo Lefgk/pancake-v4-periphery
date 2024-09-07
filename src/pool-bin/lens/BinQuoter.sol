@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 // Copyright (C) 2024 PancakeSwap
-pragma solidity ^0.8.24;
+pragma solidity 0.8.26;
 
 import {TickMath} from "pancake-v4-core/src/pool-cl/libraries/TickMath.sol";
 import {IVault} from "pancake-v4-core/src/interfaces/IVault.sol";
@@ -20,11 +20,12 @@ contract BinQuoter is Quoter, IBinQuoter {
     using PathKeyLib for PathKey;
 
     IBinPoolManager public immutable poolManager;
+    uint256 private constant BIN_MINIMUM_VALID_RESPONSE_LENGTH = 160;
 
-    /// @dev min valid reason is 2-words long
-    /// @dev int128[2] + activeIdAfter padded to 32bytes
-    /// MINIMUM_VALID_RESPONSE_LENGTH = 64;
-    constructor(address _poolManager) Quoter(_poolManager, 64) {
+    /// @dev min valid reason is 5-words long (160 bytes)
+    /// @dev int128[2] includes 32 bytes for offset, 32 bytes for length, and 32 bytes for each element
+    /// @dev Plus activeIdAfter padded to 32 bytes
+    constructor(address _poolManager) Quoter(_poolManager, BIN_MINIMUM_VALID_RESPONSE_LENGTH) {
         poolManager = IBinPoolManager(_poolManager);
     }
 
